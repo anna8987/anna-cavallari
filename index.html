@@ -83,7 +83,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 2.5rem;
+    padding: 1.25rem 2rem;
     background: var(--nav-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -94,55 +94,101 @@
 
   .nav-logo {
     font-family: var(--serif);
-    font-size: 1.1rem;
-    font-weight: 400;
-    letter-spacing: 0.04em;
+    font-weight: 300;
+    letter-spacing: 0.06em;
     color: var(--black);
     text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
   }
-  .nav-logo em {
+  .nav-logo .nav-logo-line {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--black);
+    text-transform: uppercase;
+  }
+  .nav-logo .nav-logo-line em {
     font-style: italic;
     color: var(--rose-strong);
+    text-transform: none;
   }
 
-  nav ul { list-style: none; display: flex; gap: 2.5rem; align-items: center; }
+  nav ul { list-style: none; display: flex; gap: clamp(1rem, 2vw, 2rem); align-items: center; }
 
   .theme-toggle {
-    background: none;
-    border: 0.5px solid var(--rose-light);
+    background: transparent;
+    border: 0.5px solid var(--rose-mid);
     border-radius: 20px;
-    padding: 4px 12px;
+    padding: 5px 14px;
     cursor: pointer;
     font-family: var(--sans);
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--gray-mid);
-    transition: color 0.2s, border-color 0.2s;
+    color: var(--rose-strong);
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
   }
-  .theme-toggle:hover { color: var(--rose-strong); border-color: var(--rose-strong); }
+  .theme-toggle:hover {
+    background: var(--rose-strong);
+    border-color: var(--rose-strong);
+    color: var(--white);
+  }
+
   nav a {
     font-family: var(--sans);
-    font-size: 0.75rem;
+    font-size: 0.68rem;
     font-weight: 400;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--gray-mid);
     text-decoration: none;
+    position: relative;
     transition: color 0.2s;
   }
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 0.5px;
+    background: var(--rose-strong);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
   nav a:hover { color: var(--rose-strong); }
+  nav a:hover::after { transform: scaleX(1); }
 
   /* ── HERO ── */
+  .hero-bg-flower {
+    position: fixed;
+    top: 50%;
+    right: -4vw;
+    transform: translateY(-50%);
+    width: clamp(18rem, 30vw, 32rem);
+    height: clamp(18rem, 30vw, 32rem);
+    opacity: 0.13;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    transition: opacity 0.4s;
+  }
+  [data-theme="dark"] .hero-bg-flower { opacity: 0.07; }
   .hero {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    padding: 0 2.5rem 5rem;
+    justify-content: center;
+    padding: 8rem 2.5rem 5rem;
     max-width: var(--max-w);
     margin: 0 auto;
     width: 100%;
+    position: relative;
+    z-index: 1;
   }
 
   .hero-eyebrow {
@@ -226,32 +272,46 @@
   }
 
   /* ── SEZIONI ── */
+  .section-wrap { width: 100%; }
+  .section-wrap:nth-child(odd) { background: var(--white); }
+  .section-wrap:nth-child(even) { background: var(--rose-bg); }
+
   .section {
-    border-top: 0.5px solid var(--rose-light);
-    padding: 6rem 2.5rem;
+    padding: 7rem 2.5rem;
     max-width: var(--max-w);
     margin: 0 auto;
     width: 100%;
   }
 
   .section-label {
-    font-family: var(--sans);
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+    font-family: var(--serif);
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-style: italic;
+    letter-spacing: 0.08em;
     color: var(--rose-strong);
-    margin-bottom: 3rem;
+    margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
   }
-  .section-label::after {
+  .section-label::before {
     content: '';
-    flex: 1;
+    display: block;
+    width: 32px;
     height: 0.5px;
-    background: var(--rose-light);
-    max-width: 80px;
+    background: var(--rose-mid);
+    flex-shrink: 0;
   }
+  .section-title-big {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    color: var(--black);
+    line-height: 1.1;
+    margin-bottom: 3.5rem;
+    letter-spacing: -0.01em;
+  }
+  .section-title-big em { font-style: italic; color: var(--rose-strong); }
 
   /* ── ABOUT ── */
   .about-grid {
@@ -277,27 +337,102 @@
   .about-body p + p { margin-top: 1.25rem; }
 
   .about-stats {
-    display: flex;
-    gap: 2.5rem;
-    margin-top: 2.5rem;
-    padding-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 3rem;
+    padding-top: 2.5rem;
     border-top: 0.5px solid var(--rose-light);
   }
+  .about-stats > div {
+    padding: 1.5rem 1.5rem 1.5rem 0;
+    border-right: 0.5px solid var(--rose-light);
+    position: relative;
+  }
+  .about-stats > div:last-child { border-right: none; padding-right: 0; }
+  .about-stats > div:not(:first-child) { padding-left: 1.5rem; }
   .stat-num {
     font-family: var(--serif);
-    font-size: 2.5rem;
+    font-size: clamp(3rem, 5vw, 4.5rem);
     font-weight: 300;
     color: var(--black);
     line-height: 1;
+    letter-spacing: -0.02em;
   }
   .stat-num span { font-style: italic; color: var(--rose-strong); }
   .stat-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--gray-mid);
-    margin-top: 0.35rem;
+    margin-top: 0.5rem;
+    line-height: 1.5;
   }
+
+  /* ── TIMELINE (formazione & esperienze) ── */
+  .timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6rem;
+    bottom: 0.6rem;
+    width: 0.5px;
+    background: var(--rose-light);
+  }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 2rem;
+    padding: 2rem 0 2rem 2.5rem;
+    position: relative;
+    border-bottom: 0.5px solid var(--rose-light);
+    text-decoration: none;
+    color: inherit;
+    transition: padding-left 0.3s ease;
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 2.4rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--rose-light);
+    border: 1.5px solid var(--rose-mid);
+    transition: background 0.3s, border-color 0.3s;
+    z-index: 1;
+  }
+  .timeline-item:hover { padding-left: 3rem; }
+  .timeline-item:hover::before { background: var(--rose-strong); border-color: var(--rose-strong); }
+  .timeline-item:hover .timeline-title { color: var(--rose-strong); }
+  .timeline-date {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--rose-strong);
+    white-space: nowrap;
+    padding-top: 0.1rem;
+    min-width: 9rem;
+    font-weight: 300;
+  }
+  .timeline-title {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+    transition: color 0.3s;
+  }
+  .timeline-desc {
+    font-size: 0.82rem;
+    color: var(--gray-mid);
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+  .timeline-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
   /* ── LAVORI ── */
   .projects-list { display: flex; flex-direction: column; }
@@ -305,15 +440,16 @@
   .project-item {
     display: grid;
     grid-template-columns: 1fr auto;
-    align-items: baseline;
+    align-items: start;
     gap: 2rem;
-    padding: 2rem 1.5rem;
+    padding: 2rem 1.5rem 2rem 2rem;
     border-bottom: 0.5px solid var(--rose-light);
+    border-left: 2px solid transparent;
     cursor: pointer;
     text-decoration: none;
     color: inherit;
-    border-radius: 8px;
-    transition: padding-left 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 0 8px 8px 0;
+    transition: border-left-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, padding-left 0.3s ease;
     position: relative;
     overflow: hidden;
   }
@@ -328,7 +464,7 @@
   }
   .project-item > * { position: relative; z-index: 1; }
   .project-item:first-child { border-top: 0.5px solid var(--rose-light); }
-  .project-item:hover { padding-left: 2rem; box-shadow: 0 4px 24px rgba(184,92,114,0.08); }
+  .project-item:hover { border-left-color: var(--rose-strong); padding-left: 2.5rem; box-shadow: 0 4px 24px rgba(184,92,114,0.08); }
   .project-item:hover::before { opacity: 1; }
   .project-item:hover .project-title { color: var(--rose-strong); }
   .project-item:hover .tag { background: var(--rose-light); border-color: var(--rose-mid); }
@@ -359,14 +495,15 @@
     gap: 0.4rem;
   }
   .tag {
-    font-size: 0.65rem;
-    letter-spacing: 0.14em;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--rose-strong);
-    border: 0.5px solid var(--rose-light);
-    padding: 3px 10px;
+    border: 1px solid var(--rose-mid);
+    padding: 4px 12px;
     border-radius: 20px;
-    background: var(--rose-bg);
+    background: transparent;
+    white-space: nowrap;
   }
 
   /* ── COMPETENZE ── */
@@ -376,23 +513,43 @@
   .skills-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2.5rem 3rem;
+    gap: 3rem 3.5rem;
   }
   .skill-group-title {
     font-family: var(--sans);
-    font-size: 0.65rem;
-    letter-spacing: 0.16em;
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--rose-strong);
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
-  .skill-list { list-style: none; font-family: var(--serif); font-size: 1.05rem; font-weight: 300; }
+  .skill-group-title::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--rose-mid);
+  }
+  .skill-list { list-style: none; }
   .skill-list li {
-    padding: 0.45rem 0;
-    border-bottom: 0.5px solid var(--rose-light);
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 300;
     color: var(--black);
+    padding: 0.5rem 0;
+    border-bottom: 0.5px solid var(--rose-light);
+    transition: color 0.2s, padding-left 0.2s;
+    cursor: default;
   }
   .skill-list li:last-child { border-bottom: none; }
+  .skill-list li:hover { color: var(--rose-strong); padding-left: 0.4rem; }
+  .skill-list li em {
+    font-style: italic;
+    color: var(--rose-mid);
+    font-size: 0.92rem;
+  }
 
   /* ── CONTATTI ── */
   .contact-heading {
@@ -493,41 +650,89 @@
       position: fixed;
       top: 0; right: 0;
       width: 75vw;
-      max-width: 300px;
+      max-width: 280px;
       height: 100vh;
-      background: var(--white);
-      box-shadow: -4px 0 24px rgba(26,18,21,0.12);
-      padding: 5rem 2rem 2rem;
-      gap: 2rem;
+      background: var(--rose-light);
+      box-shadow: -4px 0 32px rgba(26,18,21,0.15);
+      padding: 1.5rem 1.5rem 2.5rem;
+      gap: 0;
       z-index: 98;
       align-items: flex-start;
       justify-content: flex-start;
       transform: translateX(100%);
-      transition: transform 0.3s ease;
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
       display: flex;
+      overflow: hidden;
+      box-sizing: border-box;
     }
     nav ul.open { transform: translateX(0); }
-    nav ul li a {
-      font-size: 0.8rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gray-mid);
-      font-family: var(--sans);
-      font-weight: 400;
-    }
-    nav ul li a:hover { color: var(--rose-strong); }
-    nav ul .theme-toggle { margin-top: 0.5rem; }
-    .nav-close-item { position: absolute; top: 1.5rem; right: 1.5rem; }
-    .nav-close-item { display: block; }
 
-    .hero { padding: 0 1.5rem 4rem; }
-    .section { padding: 4rem 1.5rem; }
-    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .about-stats { gap: 1.5rem; }
-    .skills-grid { grid-template-columns: 1fr 1fr; }
+    nav ul li {
+      width: 100%;
+      border-bottom: 0.5px solid var(--rose-mid);
+    }
+    nav ul li:first-child { border-top: 0.5px solid var(--rose-mid); }
+
+    nav ul li a {
+      display: block;
+      padding: 1.1rem 0;
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: var(--black);
+      text-transform: none;
+      transition: color 0.2s, padding-left 0.2s;
+    }
+    nav ul li a:hover { color: var(--rose-strong); padding-left: 0.4rem; }
+    nav ul li a::after { display: none; }
+
+    nav ul li:has(.theme-toggle) {
+      display: flex;
+      justify-content: center;
+      border: none;
+      margin-top: auto;
+      padding: 1.5rem 0 0;
+    }
+    nav ul .theme-toggle {
+      border-color: var(--rose-strong);
+    }
+    .nav-close-item {
+      border-bottom: none !important;
+      display: flex;
+      justify-content: flex-end;
+      padding: 0 0 1rem 0;
+      margin-bottom: 0.5rem;
+    }
+
+    html, body { overflow-x: hidden; }
+
+    .hero { padding: 6rem 1.25rem 3rem; min-height: 100svh; }
+    .section { padding: 3.5rem 1.25rem; }
+    .section-title-big { font-size: clamp(1.8rem, 7vw, 2.5rem); }
+
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .about-stats { grid-template-columns: repeat(3,1fr); gap: 0; }
+    .about-stats > div { padding: 1rem 0.75rem 1rem 0; }
+    .about-stats > div:not(:first-child) { padding-left: 0.75rem; }
+    .stat-num { font-size: clamp(2rem, 8vw, 3rem); }
+
+    .about-body { font-size: 0.85rem; }
+
+    .timeline-item { grid-template-columns: 5.5rem 1fr; gap: 0 1rem; padding-left: 1.5rem; }
+    .timeline-date { font-size: 0.9rem; min-width: auto; }
+
+    .skills-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem 1rem; }
+    .skills-magazine { grid-template-columns: 1fr 1fr; }
+    .skill-row { grid-template-columns: 1fr; gap: 0.75rem; }
+
     .project-tags { display: none; }
-    .project-item { padding: 1.5rem 1rem; }
-    footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    .project-item { padding: 1.25rem 1rem; border-left: none; border-radius: 0; }
+    .project-title { font-size: 1.2rem; }
+
+    .contact-heading { font-size: clamp(1.8rem, 7vw, 2.5rem); }
+
+    footer { padding: 1.25rem; flex-direction: column; gap: 0.5rem; text-align: center; }
     .hero-scroll { display: none; }
     .theme-toggle { font-size: 0.9rem; padding: 8px 16px; }
   }
@@ -537,11 +742,36 @@
 
 <div id="custom-cursor">esplora →</div>
 <nav id="navbar">
-  <a href="#" class="nav-logo"><em>A</em>NNA CAVALLARI</a>
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-line"><em>A</em>nna</span>
+    <span class="nav-logo-line"><em>C</em>avallari</span>
+  </a>
   <button class="hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
   <ul id="nav-menu">
+    <svg aria-hidden="true" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;bottom:2rem;right:-2rem;width:160px;height:160px;opacity:0.18;pointer-events:none;">
+      <g stroke="#B85C72" stroke-width="1.5" fill="none">
+        <ellipse cx="200" cy="110" rx="28" ry="72" transform="rotate(0 200 200)"/>
+        <ellipse cx="200" cy="110" rx="28" ry="72" transform="rotate(45 200 200)"/>
+        <ellipse cx="200" cy="110" rx="28" ry="72" transform="rotate(90 200 200)"/>
+        <ellipse cx="200" cy="110" rx="28" ry="72" transform="rotate(135 200 200)"/>
+        <ellipse cx="200" cy="110" rx="28" ry="72" transform="rotate(180 200 200)"/>
+        <ellipse cx="200" cy="110" rx="28" ry="72" transform="rotate(225 200 200)"/>
+        <ellipse cx="200" cy="110" rx="28" ry="72" transform="rotate(270 200 200)"/>
+        <ellipse cx="200" cy="110" rx="28" ry="72" transform="rotate(315 200 200)"/>
+        <ellipse cx="200" cy="130" rx="18" ry="52" transform="rotate(22.5 200 200)"/>
+        <ellipse cx="200" cy="130" rx="18" ry="52" transform="rotate(67.5 200 200)"/>
+        <ellipse cx="200" cy="130" rx="18" ry="52" transform="rotate(112.5 200 200)"/>
+        <ellipse cx="200" cy="130" rx="18" ry="52" transform="rotate(157.5 200 200)"/>
+        <ellipse cx="200" cy="130" rx="18" ry="52" transform="rotate(202.5 200 200)"/>
+        <ellipse cx="200" cy="130" rx="18" ry="52" transform="rotate(247.5 200 200)"/>
+        <ellipse cx="200" cy="130" rx="18" ry="52" transform="rotate(292.5 200 200)"/>
+        <ellipse cx="200" cy="130" rx="18" ry="52" transform="rotate(337.5 200 200)"/>
+        <circle cx="200" cy="200" r="38"/><circle cx="200" cy="200" r="24"/><circle cx="200" cy="200" r="10"/>
+      </g>
+    </svg>
+    <li class="nav-close-item"><button id="nav-close" aria-label="Chiudi menu" style="background:none;border:none;cursor:pointer;font-size:1.2rem;color:var(--gray-mid);padding:0;line-height:1;">✕</button></li>
     <li><a href="#about">Profilo</a></li>
     <li><a href="#studi">Formazione</a></li>
     <li><a href="#work">Esperienze</a></li>
@@ -549,9 +779,35 @@
     <li><a href="#skills">Competenze</a></li>
     <li><a href="#contact">Contatti</a></li>
     <li><button class="theme-toggle" id="themeToggle">☾ Dark</button></li>
-    <li class="nav-close-item"><button id="nav-close" aria-label="Chiudi menu" style="background:none;border:none;cursor:pointer;font-size:1.4rem;color:var(--gray-mid);padding:0;line-height:1;">✕</button></li>
   </ul>
 </nav>
+
+<svg class="hero-bg-flower" aria-hidden="true" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g stroke="#B85C72" stroke-width="1.2" fill="none">
+    <!-- petali esterni -->
+    <ellipse cx="200" cy="110" rx="28" ry="72" transform="rotate(0 200 200)"/>
+    <ellipse cx="200" cy="110" rx="28" ry="72" transform="rotate(45 200 200)"/>
+    <ellipse cx="200" cy="110" rx="28" ry="72" transform="rotate(90 200 200)"/>
+    <ellipse cx="200" cy="110" rx="28" ry="72" transform="rotate(135 200 200)"/>
+    <ellipse cx="200" cy="110" rx="28" ry="72" transform="rotate(180 200 200)"/>
+    <ellipse cx="200" cy="110" rx="28" ry="72" transform="rotate(225 200 200)"/>
+    <ellipse cx="200" cy="110" rx="28" ry="72" transform="rotate(270 200 200)"/>
+    <ellipse cx="200" cy="110" rx="28" ry="72" transform="rotate(315 200 200)"/>
+    <!-- petali intermedi -->
+    <ellipse cx="200" cy="130" rx="18" ry="52" transform="rotate(22.5 200 200)"/>
+    <ellipse cx="200" cy="130" rx="18" ry="52" transform="rotate(67.5 200 200)"/>
+    <ellipse cx="200" cy="130" rx="18" ry="52" transform="rotate(112.5 200 200)"/>
+    <ellipse cx="200" cy="130" rx="18" ry="52" transform="rotate(157.5 200 200)"/>
+    <ellipse cx="200" cy="130" rx="18" ry="52" transform="rotate(202.5 200 200)"/>
+    <ellipse cx="200" cy="130" rx="18" ry="52" transform="rotate(247.5 200 200)"/>
+    <ellipse cx="200" cy="130" rx="18" ry="52" transform="rotate(292.5 200 200)"/>
+    <ellipse cx="200" cy="130" rx="18" ry="52" transform="rotate(337.5 200 200)"/>
+    <!-- cerchio centrale -->
+    <circle cx="200" cy="200" r="38"/>
+    <circle cx="200" cy="200" r="24"/>
+    <circle cx="200" cy="200" r="10"/>
+  </g>
+</svg>
 
 <section class="hero">
   <p class="hero-eyebrow">studentessa · Torino</p>
@@ -571,8 +827,10 @@
 
 <div class="hero-scroll" aria-hidden="true">Scorri</div>
 
+<div class="section-wrap">
 <section class="section" id="about">
   <div class="section-label">Profilo</div>
+  <h2 class="section-title-big">Chi sono</h2>
   <div class="about-grid">
     <div>
       <h2 class="about-heading fade-up">Competenze<br>che si parlano,<br>discipline<br>che si <em>intrecciano</em>.</h2>
@@ -598,73 +856,70 @@
     </div>
   </div>
 </section>
+</div>
 
+<div class="section-wrap">
 <section class="section" id="studi">
   <div class="section-label">Formazione</div>
-  <div class="projects-list">
-    <a href="https://www.ict.unito.it/" target="_blank" rel="noopener" class="project-item fade-up">
+  <h2 class="section-title-big">Il mio <em>percorso</em></h2>
+  <div class="timeline">
+    <a href="https://www.ict.unito.it/" target="_blank" rel="noopener" class="timeline-item fade-up">
+      <div class="timeline-date">2023 — 2026</div>
       <div>
-        <div class="project-num">2023 — 2026</div>
-        <div class="project-title">Università degli Studi di Torino</div>
-        <div class="project-desc">Corso triennale in Innovazione Sociale, Comunicazione e Nuove Tecnologie</div>
-      </div>
-      <div class="project-tags">
-        <span class="tag">Laurea triennale</span>
+        <div class="timeline-title">Università degli Studi di Torino</div>
+        <div class="timeline-desc">Corso triennale in Innovazione Sociale, Comunicazione e Nuove Tecnologie</div>
+        <div class="timeline-tags"><span class="tag">Laurea triennale</span></div>
       </div>
     </a>
-    <a href="https://www.gmca.edu.it/" target="_blank" rel="noopener" class="project-item fade-up">
+    <a href="https://www.gmca.edu.it/" target="_blank" rel="noopener" class="timeline-item fade-up">
+      <div class="timeline-date">fino al 2023</div>
       <div>
-        <div class="project-num">fino al 2023</div>
-        <div class="project-title">Istituto Vera e Libera Arduino — GMCA</div>
-        <div class="project-desc">Diploma in Amministrazione, Finanza e Marketing</div>
-      </div>
-      <div class="project-tags">
-        <span class="tag">Diploma</span>
+        <div class="timeline-title">Istituto Vera e Libera Arduino — GMCA</div>
+        <div class="timeline-desc">Diploma in Amministrazione, Finanza e Marketing</div>
+        <div class="timeline-tags"><span class="tag">Diploma</span></div>
       </div>
     </a>
   </div>
 </section>
+</div>
 
+<div class="section-wrap">
 <section class="section" id="work">
   <div class="section-label">Esperienze</div>
-  <div class="projects-list">
-    <div class="project-item fade-up" style="cursor:default;">
+  <h2 class="section-title-big">Cosa ho <em>fatto</em></h2>
+  <div class="timeline">
+    <div class="timeline-item fade-up">
+      <div class="timeline-date">2025 — 2026</div>
       <div>
-        <div class="project-num">2025 — 2026</div>
-        <div class="project-title">Tutor laboratoriale di Machine Learning</div>
-        <div class="project-desc">Conduzione di lezioni laboratoriali rivolte a studenti delle scuole superiori su Intelligenza Artificiale, Machine Learning, sistemi predittivi, reti CNN e analisi del linguaggio naturale.</div>
-      </div>
-      <div class="project-tags">
-        <span class="tag">Machine Learning</span>
-        <span class="tag">Sistemi predittivi</span>
+        <div class="timeline-title">Tutor laboratoriale di Machine Learning</div>
+        <div class="timeline-desc">Conduzione di lezioni laboratoriali rivolte a studenti delle scuole superiori su Intelligenza Artificiale, Machine Learning, sistemi predittivi, reti CNN e analisi del linguaggio naturale.</div>
+        <div class="timeline-tags"><span class="tag">Machine Learning</span><span class="tag">Sistemi predittivi</span></div>
       </div>
     </div>
-    <div class="project-item fade-up" style="cursor:default;">
+    <div class="timeline-item fade-up">
+      <div class="timeline-date">2023 — 2026</div>
       <div>
-        <div class="project-num">2023 — 2026</div>
-        <div class="project-title">Assistente concorsuale · Logilux</div>
-        <div class="project-desc">Supporto operativo durante eventi concorsuali: accoglienza dei partecipanti, verifica documentale, registrazione delle presenze e assistenza ai candidati.</div>
-      </div>
-      <div class="project-tags">
-        <span class="tag">Organizzazione</span>
+        <div class="timeline-title">Assistente concorsuale · Logilux</div>
+        <div class="timeline-desc">Supporto operativo durante eventi concorsuali: accoglienza dei partecipanti, verifica documentale, registrazione delle presenze e assistenza ai candidati.</div>
+        <div class="timeline-tags"><span class="tag">Organizzazione</span></div>
       </div>
     </div>
-    <div class="project-item fade-up" style="cursor:default;">
+    <div class="timeline-item fade-up">
+      <div class="timeline-date">2019 — 2024</div>
       <div>
-        <div class="project-num">2019 — 2024</div>
-        <div class="project-title">Animatrice · Oratorio Salesiano M. Rua e Don Bosco</div>
-        <div class="project-desc">Organizzazione delle giornate e gestione di attività ricreative per bambini e ragazzi, con supporto nello svolgimento dei compiti, gioco e socializzazione.</div>
-      </div>
-      <div class="project-tags">
-        <span class="tag">Educazione</span>
-        <span class="tag">Gestione gruppi</span>
+        <div class="timeline-title">Animatrice · Oratorio Salesiano M. Rua e Don Bosco</div>
+        <div class="timeline-desc">Organizzazione delle giornate e gestione di attività ricreative per bambini e ragazzi, con supporto nello svolgimento dei compiti, gioco e socializzazione.</div>
+        <div class="timeline-tags"><span class="tag">Educazione</span><span class="tag">Gestione gruppi</span></div>
       </div>
     </div>
   </div>
 </section>
+</div>
 
+<div class="section-wrap">
 <section class="section" id="progetti">
   <div class="section-label">Progetti</div>
+  <h2 class="section-title-big">Cosa ho <em>costruito</em></h2>
   <div class="projects-list">
     <a href="https://drive.google.com/file/d/10vggg84RX8NJWq0IW93pobpDIocyCWyo/view?usp=drive_link" target="_blank" rel="noopener" class="project-item fade-up">
       <div>
@@ -733,10 +988,12 @@
     </a>
   </div>
 </section>
+</div>
 
-<div class="skills-bg">
-  <section class="section" id="skills">
-    <div class="section-label">Competenze</div>
+<div class="section-wrap">
+<section class="section" id="skills">
+  <div class="section-label">Competenze</div>
+  <h2 class="section-title-big">Cosa <em>so fare</em></h2>
     <div class="skills-grid">
       <div class="fade-up">
         <div class="skill-group-title">Sviluppo</div>
@@ -744,57 +1001,58 @@
           <li>Python</li>
           <li>Java</li>
           <li>PHP</li>
-          <li>HTML / CSS</li>
+          <li>HTML <em>&</em> CSS</li>
           <li>MySQL</li>
           <li>Data Warehousing</li>
         </ul>
       </div>
       <div class="fade-up">
-        <div class="skill-group-title">Data &amp; AI</div>
+        <div class="skill-group-title">Data <em style="font-style:italic;letter-spacing:0">&</em> AI</div>
         <ul class="skill-list">
-          <li>Modelli predittivi</li>
-          <li>Reti convoluzionali</li>
-          <li>Sentiment analysis</li>
+          <li>Modelli <em>predittivi</em></li>
+          <li>Reti <em>convoluzionali</em></li>
+          <li>Sentiment <em>analysis</em></li>
           <li>Orange</li>
-          <li>Analisi esplorativa</li>
+          <li>Analisi <em>esplorativa</em></li>
         </ul>
       </div>
       <div class="fade-up">
         <div class="skill-group-title">Design</div>
         <ul class="skill-list">
-          <li>UX Design</li>
-          <li>Interaction Design</li>
+          <li>UX <em>Design</em></li>
+          <li>Interaction <em>Design</em></li>
           <li>Figma</li>
           <li>Prototipazione</li>
-          <li>Usability Testing</li>
+          <li>Usability <em>Testing</em></li>
           <li>Canva</li>
         </ul>
       </div>
       <div class="fade-up">
         <div class="skill-group-title">Marketing</div>
         <ul class="skill-list">
-          <li>Strategia di marketing</li>
-          <li>Segmentazione e posizionamento</li>
-          <li>Brand management</li>
-          <li>Digital marketing</li>
+          <li>Strategia <em>di marketing</em></li>
+          <li>Segmentazione <em>&</em> posizionamento</li>
+          <li>Brand <em>management</em></li>
+          <li>Digital <em>marketing</em></li>
           <li>SEO / GEO / AEO</li>
-          <li>Ottimizzazione per LLM</li>
+          <li>Ottimizzazione <em>per LLM</em></li>
         </ul>
       </div>
       <div class="fade-up">
         <div class="skill-group-title">Diritto digitale</div>
         <ul class="skill-list">
           <li>GDPR</li>
-          <li>AI Act</li>
+          <li>AI <em>Act</em></li>
           <li>Brevetti</li>
           <li>Marchi</li>
-          <li>Diritto d'autore</li>
+          <li>Diritto <em>d'autore</em></li>
         </ul>
       </div>
     </div>
   </section>
 </div>
 
+<div class="section-wrap">
 <section class="section" id="contact">
   <div class="section-label">Contatti</div>
   <h2 class="contact-heading fade-up">Il prossimo passo<br>inizia da<br>una <em>email</em>.</h2>
@@ -813,6 +1071,7 @@
     </a>
   </div>
 </section>
+</div>
 
 <footer>
   <p>© 2026 Anna Cavallari · Torino, Italia</p>
