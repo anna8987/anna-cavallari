@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anna Cavallari- studentessa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black:       #1A1215;
+    --white:       #FFFBFC;
+    --rose-bg:     #FDF0F3;
+    --rose-light:  #F7D9E0;
+    --rose-mid:    #D4899A;
+    --rose-strong: #B85C72;
+    --rose-dark:   #8C3A50;
+    --gray-mid:    #A89298;
+    --max-w:       780px;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans:  'Inter', system-ui, sans-serif;
+    --nav-bg: rgba(255, 251, 252, 0.92);
+    --about-body: #5A4048;
+  }
+
+  [data-theme="dark"] {
+    --black:       #F5EEF0;
+    --white:       #1A1215;
+    --rose-bg:     #2A1A1F;
+    --rose-light:  #3D2530;
+    --rose-mid:    #C47A8A;
+    --rose-strong: #D4899A;
+    --rose-dark:   #E8B4BF;
+    --gray-mid:    #8A7278;
+    --nav-bg: rgba(26, 18, 21, 0.92);
+    --about-body: #C5A8B0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body { transition: background 0.3s, color 0.3s; cursor: none; }
+
+  #custom-cursor {
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    background: var(--rose-strong);
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.08s linear;
+    opacity: 0;
+  }
+  body:hover #custom-cursor { opacity: 1; }
+  a, button { cursor: none; }
+
+  body {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--black);
+    background: var(--white);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2.5rem;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid transparent;
+    transition: border-color 0.3s;
+  }
+  nav.scrolled { border-color: var(--rose-light); }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--black);
+    text-decoration: none;
+  }
+  .nav-logo em {
+    font-style: italic;
+    color: var(--rose-strong);
+  }
+
+  nav ul { list-style: none; display: flex; gap: 2.5rem; align-items: center; }
+
+  .theme-toggle {
+    background: none;
+    border: 0.5px solid var(--rose-light);
+    border-radius: 20px;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .theme-toggle:hover { color: var(--rose-strong); border-color: var(--rose-strong); }
+  nav a {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--rose-strong); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 2.5rem 5rem;
+    max-width: var(--max-w);
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rose-strong);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    color: var(--black);
+    margin-bottom: 2rem;
+  }
+  .hero-name .initial {
+    font-style: italic;
+    color: var(--rose-strong);
+    font-weight: 300;
+  }
+  .hero-name .rest {
+    letter-spacing: 0.06em;
+    font-style: normal;
+  }
+
+  .hero-tagline {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gray-mid);
+    max-width: 480px;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--black);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rose-strong);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .hero-cta:hover { color: var(--rose-dark); border-color: var(--rose-dark); }
+  .hero-cta:hover svg { transform: translateX(4px); }
+  .hero-cta svg { transition: transform 0.2s; }
+
+  .hero-scroll {
+    position: fixed;
+    right: 2.5rem;
+    bottom: 3rem;
+    writing-mode: vertical-rl;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .hero-scroll::after {
+    content: '';
+    display: block;
+    width: 0.5px;
+    height: 60px;
+    background: var(--rose-light);
+  }
+
+  /* ── SEZIONI ── */
+  .section {
+    border-top: 0.5px solid var(--rose-light);
+    padding: 6rem 2.5rem;
+    max-width: var(--max-w);
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .section-label {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose-strong);
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--rose-light);
+    max-width: 80px;
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .about-heading {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--black);
+  }
+  .about-heading em { font-style: italic; color: var(--rose-strong); }
+
+  .about-body {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: var(--about-body);
+  }
+  .about-body p + p { margin-top: 1.25rem; }
+
+  .about-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 0.5px solid var(--rose-light);
+  }
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--black);
+    line-height: 1;
+  }
+  .stat-num span { font-style: italic; color: var(--rose-strong); }
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    margin-top: 0.35rem;
+  }
+
+  /* ── LAVORI ── */
+  .projects-list { display: flex; flex-direction: column; }
+
+  .project-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 2rem;
+    padding: 2rem 1.5rem;
+    border-bottom: 0.5px solid var(--rose-light);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 8px;
+    transition: padding-left 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, var(--rose-bg), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+  }
+  .project-item > * { position: relative; z-index: 1; }
+  .project-item:first-child { border-top: 0.5px solid var(--rose-light); }
+  .project-item:hover { padding-left: 2rem; box-shadow: 0 4px 24px rgba(184,92,114,0.08); }
+  .project-item:hover::before { opacity: 1; }
+  .project-item:hover .project-title { color: var(--rose-strong); }
+  .project-item:hover .tag { background: var(--rose-light); border-color: var(--rose-mid); }
+
+  .project-num {
+    font-family: var(--serif);
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--rose-mid);
+    margin-bottom: 0.5rem;
+  }
+  .project-title {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .project-desc {
+    font-size: 0.82rem;
+    color: var(--gray-mid);
+    letter-spacing: 0.02em;
+  }
+  .project-tags {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.4rem;
+  }
+  .tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rose-strong);
+    border: 0.5px solid var(--rose-light);
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--rose-bg);
+  }
+
+  /* ── COMPETENZE ── */
+  .skills-bg { background: var(--rose-bg); width: 100%; }
+  .skills-bg .section { border-top: none; }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem 3rem;
+  }
+  .skill-group-title {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--rose-strong);
+    margin-bottom: 1rem;
+  }
+  .skill-list { list-style: none; font-family: var(--serif); font-size: 1.05rem; font-weight: 300; }
+  .skill-list li {
+    padding: 0.45rem 0;
+    border-bottom: 0.5px solid var(--rose-light);
+    color: var(--black);
+  }
+  .skill-list li:last-child { border-bottom: none; }
+
+  /* ── CONTATTI ── */
+  .contact-heading {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 2.5rem;
+  }
+  .contact-heading em { font-style: italic; color: var(--rose-strong); }
+
+  .contact-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 0.5px solid var(--rose-light);
+    text-decoration: none;
+    color: var(--black);
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 300;
+    transition: padding-left 0.2s, color 0.2s;
+  }
+  .contact-link:first-child { border-top: 0.5px solid var(--rose-light); }
+  .contact-link:hover { padding-left: 0.5rem; color: var(--rose-dark); }
+  .contact-link-label {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 0.5px solid var(--rose-light);
+    padding: 2rem 2.5rem;
+    max-width: var(--max-w);
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer p { font-size: 0.72rem; letter-spacing: 0.08em; color: var(--gray-mid); }
+  .footer-initials { font-family: var(--serif); font-style: italic; color: var(--rose-strong); font-size: 1.1rem; }
+
+  /* ── ANIMAZIONI ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up { opacity: 1; transform: none; transition: none; }
+    .project-item, .contact-link, .hero-cta { transition: none; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    nav { padding: 1.25rem 1.5rem; }
+    nav ul { gap: 1.5rem; }
+    .hero { padding: 0 1.5rem 4rem; }
+    .section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .project-tags { display: none; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    .hero-scroll { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="custom-cursor">esplora →</div>
+<nav id="navbar">
+  <a href="#" class="nav-logo"><em>A</em>NNA CAVALLARI</a>
+  <ul>
+    <li><a href="#about">Profilo</a></li>
+    <li><a href="#studi">Formazione</a></li>
+    <li><a href="#work">Esperienze</a></li>
+    <li><a href="#progetti">Progetti</a></li>
+    <li><a href="#skills">Competenze</a></li>
+    <li><a href="#contact">Contatti</a></li>
+    <li><button class="theme-toggle" id="themeToggle">☾ Dark</button></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <p class="hero-eyebrow">studentessa · Torino</p>
+  <h1 class="hero-name">
+    <span class="initial">A</span><span class="rest">NNA</span><br>
+    <span class="initial">C</span><span class="rest">AVALLARI</span>
+  </h1>
+  <p class="hero-eyebrow" style="margin-bottom: 1rem;">26 novembre 2004</p>
+  <p class="hero-tagline">Laureata in Innovazione sociale, Comunicazione e Nuove Tecnologie.</p>
+  <a href="#progetti" class="hero-cta">
+    Scopri i miei lavori
+    <svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true">
+      <path d="M1 5h14M10 1l4 4-4 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+</section>
+
+<div class="hero-scroll" aria-hidden="true">Scorri</div>
+
+<section class="section" id="about">
+  <div class="section-label">Profilo</div>
+  <div class="about-grid">
+    <div>
+      <h2 class="about-heading fade-up">Competenze<br>che si parlano,<br>discipline<br>che si <em>intrecciano</em>.</h2>
+      <div class="about-stats fade-up">
+        <div>
+          <div class="stat-num">5<span>+</span></div>
+          <div class="stat-label">Linguaggi</div>
+        </div>
+        <div>
+          <div class="stat-num">4</div>
+          <div class="stat-label">Aree di expertise</div>
+        </div>
+        <div>
+          <div class="stat-num">360<span>°</span></div>
+          <div class="stat-label">Visione d'insieme</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-body fade-up">
+      <p>Sono Cavallari Anna. La mia formazione si estende dalla scrittura del codice all'analisi dei dati, fino al diritto che governa le tecnologie digitali.</p>
+      <p>Programmo in <strong>Python, Java, PHP, HTML e CSS</strong>, progetto e interrogo database con MySQL, e trasformo dati grezzi in modelli predittivi: reti convoluzionali, sentiment analysis, sistemi di raccomandazione. Non mi fermo al risultato, voglio comprendere cosa c'è dietro.</p>
+      <p>Ho studiato marketing in tutta la sua estensione: dalla strategia di posizionamento alla creazione di valore per il cliente, dalla distribuzione del prodotto alle tecniche digitali di visibilità come <strong>SEO, GEO, AEO e ottimizzazione per LLM</strong>. E conosco le normative che regolano ciò che creo: <strong>GDPR, AI Act, brevetti, marchi e diritto d'autore</strong>. Una visione tecnica e giuridica insieme, perché oggi non basta saper fare: bisogna anche sapere entro quali confini farlo.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="studi">
+  <div class="section-label">Formazione</div>
+  <div class="projects-list">
+    <a href="https://www.ict.unito.it/" target="_blank" rel="noopener" class="project-item fade-up">
+      <div>
+        <div class="project-num">2023 — 2026</div>
+        <div class="project-title">Università degli Studi di Torino</div>
+        <div class="project-desc">Corso triennale in Innovazione Sociale, Comunicazione e Nuove Tecnologie</div>
+      </div>
+      <div class="project-tags">
+        <span class="tag">Laurea triennale</span>
+      </div>
+    </a>
+    <a href="https://www.gmca.edu.it/" target="_blank" rel="noopener" class="project-item fade-up">
+      <div>
+        <div class="project-num">fino al 2023</div>
+        <div class="project-title">Istituto Vera e Libera Arduino — GMCA</div>
+        <div class="project-desc">Diploma in Amministrazione, Finanza e Marketing</div>
+      </div>
+      <div class="project-tags">
+        <span class="tag">Diploma</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="section" id="work">
+  <div class="section-label">Esperienze</div>
+  <div class="projects-list">
+    <div class="project-item fade-up" style="cursor:default;">
+      <div>
+        <div class="project-num">2025 — 2026</div>
+        <div class="project-title">Tutor laboratoriale di Machine Learning</div>
+        <div class="project-desc">Conduzione di lezioni laboratoriali rivolte a studenti delle scuole superiori su Intelligenza Artificiale, Machine Learning, sistemi predittivi, reti CNN e analisi del linguaggio naturale.</div>
+      </div>
+      <div class="project-tags">
+        <span class="tag">Machine Learning</span>
+        <span class="tag">Sistemi predittivi</span>
+      </div>
+    </div>
+    <div class="project-item fade-up" style="cursor:default;">
+      <div>
+        <div class="project-num">2023 — 2026</div>
+        <div class="project-title">Assistente concorsuale · Logilux</div>
+        <div class="project-desc">Supporto operativo durante eventi concorsuali: accoglienza dei partecipanti, verifica documentale, registrazione delle presenze e assistenza ai candidati.</div>
+      </div>
+      <div class="project-tags">
+        <span class="tag">Organizzazione</span>
+      </div>
+    </div>
+    <div class="project-item fade-up" style="cursor:default;">
+      <div>
+        <div class="project-num">2019 — 2024</div>
+        <div class="project-title">Animatrice · Oratorio Salesiano M. Rua e Don Bosco</div>
+        <div class="project-desc">Organizzazione delle giornate e gestione di attività ricreative per bambini e ragazzi, con supporto nello svolgimento dei compiti, gioco e socializzazione.</div>
+      </div>
+      <div class="project-tags">
+        <span class="tag">Educazione</span>
+        <span class="tag">Gestione gruppi</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="progetti">
+  <div class="section-label">Progetti</div>
+  <div class="projects-list">
+    <div class="project-item fade-up" style="cursor:default;">
+      <div>
+        <div class="project-title">Zoomie — Il guinzaglio digitale</div>
+        <div class="project-desc">Progetto di Interaction Design: robottino intelligente con app di controllo remoto per monitorare e interagire con gli animali domestici durante le assenze del proprietario.</div>
+      </div>
+      <div class="project-tags">
+        <span class="tag">UX Design</span>
+        <span class="tag">Interaction Design</span>
+        <span class="tag">Prototipazione</span>
+      </div>
+    </div>
+    <a href="https://drive.google.com/file/d/1_kOTD2bhBLiB0sv-719-EtLGRWyvXMfF/view?usp=drive_link" target="_blank" rel="noopener" class="project-item fade-up">
+      <div>
+        <div class="project-title">Amabile Jewels — Sistema informativo</div>
+        <div class="project-desc">Progettazione e implementazione di un sistema informativo per un brand di gioielli: database relazionale, data warehouse con operatori OLAP e data mining per l'analisi dei trend di mercato.</div>
+      </div>
+      <div class="project-tags">
+        <span class="tag">MySQL</span>
+        <span class="tag">Data Warehouse</span>
+        <span class="tag">Data Mining</span>
+      </div>
+    </a>
+    <a href="https://github.com/anna8987/amabile" target="_blank" rel="noopener" class="project-item fade-up">
+      <div>
+        <div class="project-title">Amabile Jewels — Sito web</div>
+        <div class="project-desc">Sviluppo del sito web completo per un brand di gioielli: gestione prodotti, eventi, utenti e area amministratore, con connessione al database MySQL.</div>
+      </div>
+      <div class="project-tags">
+        <span class="tag">PHP</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">HTML / CSS</span>
+      </div>
+    </a>
+    <a href="https://github.com/anna8987/progetto-java/tree/main/src" target="_blank" rel="noopener" class="project-item fade-up">
+      <div>
+        <div class="project-title">Sistema di noleggio autobus</div>
+        <div class="project-desc">Progetto Java orientato agli oggetti: modellazione di un sistema di noleggio con ereditarietà, comparatori e collezioni. Classi Autobus, AutobusElettrico, Noleggio, Persona e YellowPages.</div>
+      </div>
+      <div class="project-tags">
+        <span class="tag">Java</span>
+        <span class="tag">OOP</span>
+      </div>
+    </a>
+    <a href="https://github.com/anna8987/jobrec" target="_blank" rel="noopener" class="project-item fade-up">
+      <div>
+        <div class="project-title">AI Job Recommendation — Analisi del mercato del lavoro AI</div>
+        <div class="project-desc">Progetto di gruppo: analisi di 50.000 offerte di lavoro nel settore dell'intelligenza artificiale. Preprocessing, clustering K-Means e DBSCAN, regressione lineare, logistica e random forest.</div>
+      </div>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">Machine Learning</span>
+        <span class="tag">Clustering</span>
+      </div>
+    </a>
+    <a href="https://github.com/anna8987/tesi-COMPAS" target="_blank" rel="noopener" class="project-item fade-up">
+      <div>
+        <div class="project-title">Giustizia predittiva e bias algoritmici — Caso COMPAS</div>
+        <div class="project-desc">Analisi empirica in Python del dataset COMPAS: preprocessing, modelli predittivi, fairness algoritmica e analisi controfattuale.</div>
+      </div>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">Machine Learning</span>
+        <span class="tag">Data Analysis</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<div class="skills-bg">
+  <section class="section" id="skills">
+    <div class="section-label">Competenze</div>
+    <div class="skills-grid">
+      <div class="fade-up">
+        <div class="skill-group-title">Sviluppo</div>
+        <ul class="skill-list">
+          <li>Python</li>
+          <li>Java</li>
+          <li>PHP</li>
+          <li>HTML / CSS</li>
+          <li>MySQL</li>
+          <li>Data Warehousing</li>
+        </ul>
+      </div>
+      <div class="fade-up">
+        <div class="skill-group-title">Data &amp; AI</div>
+        <ul class="skill-list">
+          <li>Modelli predittivi</li>
+          <li>Reti convoluzionali</li>
+          <li>Sentiment analysis</li>
+          <li>Orange</li>
+          <li>Analisi esplorativa</li>
+        </ul>
+      </div>
+      <div class="fade-up">
+        <div class="skill-group-title">Design</div>
+        <ul class="skill-list">
+          <li>UX Design</li>
+          <li>Interaction Design</li>
+          <li>Figma</li>
+          <li>Prototipazione</li>
+          <li>Usability Testing</li>
+          <li>Canva</li>
+        </ul>
+      </div>
+      <div class="fade-up">
+        <div class="skill-group-title">Marketing</div>
+        <ul class="skill-list">
+          <li>Strategia di marketing</li>
+          <li>Segmentazione e posizionamento</li>
+          <li>Brand management</li>
+          <li>Digital marketing</li>
+          <li>SEO / GEO / AEO</li>
+          <li>Ottimizzazione per LLM</li>
+        </ul>
+      </div>
+      <div class="fade-up">
+        <div class="skill-group-title">Diritto digitale</div>
+        <ul class="skill-list">
+          <li>GDPR</li>
+          <li>AI Act</li>
+          <li>Brevetti</li>
+          <li>Marchi</li>
+          <li>Diritto d'autore</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="section" id="contact">
+  <div class="section-label">Contatti</div>
+  <h2 class="contact-heading fade-up">Il prossimo passo<br>inizia da<br>una <em>email</em>.</h2>
+  <div>
+    <a href="mailto:cavallarianna04@gmail.com" class="contact-link fade-up">
+      cavallarianna04@gmail.com
+      <span class="contact-link-label">Email</span>
+    </a>
+    <a href="https://www.linkedin.com/in/anna-cavallari04/" target="_blank" rel="noopener" class="contact-link fade-up">
+      linkedin.com/in/anna-cavallari04
+      <span class="contact-link-label">LinkedIn</span>
+    </a>
+    <a href="https://github.com/anna8987" target="_blank" rel="noopener" class="contact-link fade-up">
+      github.com/anna8987
+      <span class="contact-link-label">GitHub</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Anna Cavallari · Torino, Italia</p>
+  <span class="footer-initials">AC</span>
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  function animateCounter(el, target, suffix, duration) {
+    const start = performance.now();
+    const easeOut = t => 1 - Math.pow(1 - t, 3);
+
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const value = Math.floor(easeOut(progress) * target);
+      el.innerHTML = value + (suffix ? '<span>' + suffix + '</span>' : '');
+      if (progress < 1) requestAnimationFrame(update);
+      else el.innerHTML = target + (suffix ? '<span>' + suffix + '</span>' : '');
+    }
+    requestAnimationFrame(update);
+  }
+
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const nums = entry.target.querySelectorAll('.stat-num');
+        nums.forEach((num, i) => {
+          const suffix = num.querySelector('span') ? num.querySelector('span').textContent : '';
+          const value = parseInt(num.textContent);
+          setTimeout(() => animateCounter(num, value, suffix, 2800), i * 300);
+        });
+        statsObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelector('.about-stats') && statsObserver.observe(document.querySelector('.about-stats'));
+
+  const heroName = document.querySelector('.hero-name');
+  const lines = ['ANNA', 'CAVALLARI'];
+  const initials = ['A', 'C'];
+  heroName.innerHTML = '';
+
+  function typeLine(lineIndex, callback) {
+    const span = document.createElement('span');
+    heroName.appendChild(span);
+    if (lineIndex < lines.length - 1) {
+      const br = document.createElement('br');
+      heroName.appendChild(br);
+    }
+
+    const initial = initials[lineIndex];
+    const rest = lines[lineIndex].slice(1);
+    let i = 0;
+
+    function typeChar() {
+      if (i === 0) {
+        span.innerHTML = `<span class="initial">${initial}</span>`;
+        i++;
+        setTimeout(typeChar, 80);
+      } else if (i <= rest.length) {
+        span.innerHTML = `<span class="initial">${initial}</span><span class="rest">${rest.slice(0, i)}</span>`;
+        i++;
+        setTimeout(typeChar, 80);
+      } else {
+        if (callback) setTimeout(callback, 150);
+      }
+    }
+    typeChar();
+  }
+
+  setTimeout(() => {
+    typeLine(0, () => typeLine(1));
+  }, 400);
+
+  const cursor = document.getElementById('custom-cursor');
+
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+
+  document.querySelectorAll('.project-item, .contact-link').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.textContent = 'apri →');
+    el.addEventListener('mouseleave', () => cursor.textContent = 'esplora →');
+  });
+
+  document.querySelectorAll('a[href^="mailto"]').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.textContent = 'scrivimi →');
+    el.addEventListener('mouseleave', () => cursor.textContent = 'esplora →');
+  });
+
+  document.querySelector('.hero-name').addEventListener('mouseenter', () => cursor.textContent = 'ciao →');
+  document.querySelector('.hero-name').addEventListener('mouseleave', () => cursor.textContent = 'esplora →');
+
+  document.querySelectorAll('#studi .project-item').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.textContent = 'apri →');
+    el.addEventListener('mouseleave', () => cursor.textContent = 'esplora →');
+  });
+
+  document.querySelectorAll('#work .project-item').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.textContent = 'esplora →');
+    el.addEventListener('mouseleave', () => cursor.textContent = 'esplora →');
+  });
+
+  document.getElementById('navbar').addEventListener('mouseenter', () => {
+    cursor.style.opacity = '0';
+    document.body.style.cursor = 'auto';
+    document.querySelectorAll('a, button').forEach(el => el.style.cursor = 'pointer');
+  });
+  document.getElementById('navbar').addEventListener('mouseleave', () => {
+    cursor.style.opacity = '1';
+    document.body.style.cursor = 'none';
+    document.querySelectorAll('a, button').forEach(el => el.style.cursor = 'none');
+  });
+
+  const themeToggle = document.getElementById('themeToggle');
+  const html = document.documentElement;
+
+  themeToggle.addEventListener('click', () => {
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    themeToggle.textContent = isDark ? '☾ Dark' : '☀ Light';
+  });
+</script>
+
+</body>
+</html>
